@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 
-// GET - fetch all users
+// GET
 exports.getUsers = async (req, res) => {
       try {
             const users = await User.find();
@@ -10,7 +10,7 @@ exports.getUsers = async (req, res) => {
       }
 };
 
-// POST - create new user
+// POST
 exports.createUser = async (req, res) => {
       try {
             const user = new User(req.body);
@@ -21,7 +21,7 @@ exports.createUser = async (req, res) => {
       }
 };
 
-// PUT - full update
+// PUT
 exports.updateUser = async (req, res) => {
       try {
             const user = await User.findByIdAndUpdate(
@@ -35,7 +35,7 @@ exports.updateUser = async (req, res) => {
       }
 };
 
-// PATCH - partial update
+// PATCH
 exports.patchUser = async (req, res) => {
       try {
             const user = await User.findByIdAndUpdate(
@@ -49,7 +49,7 @@ exports.patchUser = async (req, res) => {
       }
 };
 
-// DELETE - remove user
+// DELETE
 exports.deleteUser = async (req, res) => {
       try {
             await User.findByIdAndDelete(req.params.id);
