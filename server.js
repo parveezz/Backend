@@ -2,10 +2,10 @@ require("dotenv").config();
 
 const app = require("./src/app");
 
-// IMPORTANT: match your exact folder structure
-const connectDB = require("./src/config/config/db.js");
+// Correct path
+const connectDB = require("./src/config/db");
 
-// connect to MongoDB
+// Connect to MongoDB
 connectDB();
 
 const PORT = process.env.PORT || 5000;
