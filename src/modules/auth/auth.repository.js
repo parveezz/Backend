@@ -17,7 +17,7 @@ export const findEmail = async (email) => {
 // ---------------------------------------------------------------------------
 export const findUserById = async (userId) => {
       const result = await pool.query(
-            `SELECT id, name, email, email_verified, created_at
+            `SELECT id, name, email, email_verified, role, active_mode, created_at
      FROM users
      WHERE id = $1`,
             [userId]
@@ -29,12 +29,28 @@ export const findUserById = async (userId) => {
 // ---------------------------------------------------------------------------
 // Register a new user
 // ---------------------------------------------------------------------------
-export const register = async (fullname, email, password) => {
+export const register = async (fullname, email, password, role = "both") => {
       const result = await pool.query(
-            `INSERT INTO users (name, email, password)
-     VALUES ($1, $2, $3)
-     RETURNING id, name, email, email_verified, created_at`,
-            [fullname, email, password]
+            `INSERT INTO users (name, email, password, role, active_mode)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING id, name, email, email_verified, role, active_mode, created_at`,
+            [fullname, email, password, role, "buyer"]
+      );
+
+      return result.rows[0];
+};
+
+// ---------------------------------------------------------------------------
+// Switch active user mode ('buyer' or 'seller')
+// ---------------------------------------------------------------------------
+export const switchUserMode = async (userId, mode) => {
+      const result = await pool.query(
+            `UPDATE users
+       SET active_mode = $1,
+           updated_at = CURRENT_TIMESTAMP
+       WHERE id = $2
+       RETURNING id, name, email, role, active_mode`,
+            [mode, userId]
       );
 
       return result.rows[0];

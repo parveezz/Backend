@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./src/docs/swagger.js";
 import authRoutes from "./src/modules/auth/auth.routes.js";
+import listingRoutes from "./src/modules/Listings/listing.routes.js";
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Module Routes
 app.use("/auth", authRoutes);
+app.use("/listings", listingRoutes);
 
 // 404 Not Found Handler
 app.use((req, res) => {
